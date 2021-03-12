@@ -5,6 +5,7 @@ import "./App.css";
 
 const App = () => {
   const [data, setData] = useState([]);
+  const [today, setToday] = useState(new Date().getDate());
 
   useEffect(() => {
     Axios.get("http://localhost:4000/bugs").then((res) => setData(res.data));
@@ -29,6 +30,10 @@ const App = () => {
           </Link>
         </span>
       </h1>
+      <p>
+        All bugs needs to be resolved by <b>3 days from the date it assigned</b>{" "}
+        if it is not resolved by 3 days then it will highlighted as Red color
+      </p>
       <table className="table table-default">
         <thead>
           <tr>
@@ -36,7 +41,6 @@ const App = () => {
             <th>Bug Description</th>
             <th>Assign to</th>
             <th>Assigned on</th>
-            <th>Resolved by</th>
           </tr>
         </thead>
         <tbody>
@@ -47,11 +51,23 @@ const App = () => {
           ) : (
             data.map((bug) => {
               return (
-                <tr key={bug._id}>
+                <tr
+                  key={bug._id}
+                  className={
+                    today <=
+                    parseInt(
+                      bug.date
+                        .toString()
+                        .substring(0, bug.date.toString().indexOf("-"))
+                    ) +
+                      3
+                      ? "table-default"
+                      : "table-danger"
+                  }
+                >
                   <td>{bug.name}</td>
                   <td>{bug.description}</td>
                   <td>{bug.assignee}</td>
-                  <td>{bug.date}</td>
                   <td>{bug.date}</td>
                 </tr>
               );

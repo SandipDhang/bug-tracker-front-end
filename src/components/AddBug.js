@@ -18,7 +18,7 @@ const AddBug = () => {
     const hrs = date.getHours();
     const min = date.getMinutes();
 
-    setDate(`${day}-${month}-${year}`);
+    //setDate(`${day}-${month}-${year}`);
     setTime(`${hrs}:${min}`);
   }, []);
 
@@ -109,8 +109,9 @@ const AddBug = () => {
             type="text"
             className="form-control"
             id="assignDate"
-            readOnly
-            value={date}
+            // readOnly
+            // value={date}
+            onChange={(e) => setDate(e.target.value)}
           />
         </div>
         <div className="col-md-3 mb-3">
